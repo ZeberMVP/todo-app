@@ -2,23 +2,16 @@
 
 import Navbar from "@/components/Navbar";
 import TodoList from "@/components/TodoList";
+import Footer from "@/components/Footer";
 
 export default function Home() {
-  const todos = [
-    {
-      title: "Tarea 1",
-      checked: false,
-    },
-    { title: "Tarea 2", checked: false },
-    { title: "Tarea 3", checked: false },
-  ];
-
   return (
     <div>
       <Navbar />
-      <main>
-        <TodoList todos={todos} />
+      <main className=" bg-base-100">
+        <TodoList />
       </main>
+      <Footer />
     </div>
   );
 }
