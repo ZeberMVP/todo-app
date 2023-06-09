@@ -12,7 +12,12 @@ const Navbar = () => {
         </a>
       </div>
       <div className="navbar-end">
-        <button className="btn btn-accent btn-md w-1/8">Sign In</button>
+        <button
+          className="btn btn-accent btn-md w-1/8"
+          onClick={() => alert("Authentication has not been implemented yet")}
+        >
+          Sign In
+        </button>
       </div>
     </div>
   );

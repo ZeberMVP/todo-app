@@ -3,34 +3,40 @@
 import { ChangeEvent, FC, useState } from "react";
 
 export interface TodoProps {
-  title: string;
-  checked: boolean;
+  id: string;
+  title: string | null;
+  checked: boolean | null;
+  onDelete: () => void;
 }
 
-const Todo: FC<TodoProps> = ({ title, checked }) => {
+const Todo: FC<TodoProps> = ({ title, checked, onDelete }) => {
   const [newTitle, setNewTitle] = useState(title);
   const [isChecked, setIsChecked] = useState(checked);
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleCheckboxChange = () => {
+  function handleCheckboxChange() {
     setIsChecked(!isChecked);
-  };
+  }
 
-  const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
+  function handleInput(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.value.length > 0) setNewTitle(event.target.value);
-  };
+  }
 
-  const handleClick = () => {
+  function handleEdit() {
     setIsEditing(!isEditing);
-  };
+  }
 
-  return (
+  function handleDelete() {
+    onDelete();
+  }
+
+  return newTitle ? (
     <div className="form-control bg-base-100 w-full ">
       <label className="label cursor-pointer flex justify-evenly mr-8">
         {isEditing ? (
           <input
             type="text"
-            placeholder={newTitle}
+            placeholder={newTitle!}
             onBlur={handleInput}
             className="input input-bordered input-neutral text-base-content max-w-4xl flex-grow focus:outline-none"
             autoFocus
@@ -42,21 +48,27 @@ const Todo: FC<TodoProps> = ({ title, checked }) => {
         )}
 
         <button
-          onClick={handleClick}
+          onClick={handleEdit}
           className="btn btn-ghost mr-8 text-base-content"
         >
           {isEditing ? "close" : "edit"}
         </button>
+        <button
+          onClick={handleDelete}
+          className="btn btn-error mr-8 text-base-content"
+        >
+          delete
+        </button>
 
         <input
           type="checkbox"
-          checked={isChecked}
+          checked={isChecked!}
           className="checkbox checkbox-success mr-8"
           onChange={handleCheckboxChange}
         />
       </label>
     </div>
-  );
+  ) : null;
 };
 
 export default Todo;

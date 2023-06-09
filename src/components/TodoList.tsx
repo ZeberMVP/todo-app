@@ -8,13 +8,23 @@ const TodoList = () => {
   const [todos, setTodos] = useState<TodoProps[]>([]);
 
   function addTodo() {
-    setTodos([
-      ...todos,
+    const id = nanoid();
+    setTodos((prevTodos) => [
+      ...prevTodos,
       {
         title: "New task",
         checked: false,
+        id,
+        onDelete: () => handleDelete(id),
       },
     ]);
+  }
+
+  function handleDelete(id: string) {
+    setTodos((prevTodos) => {
+      const updatedTodos = prevTodos.filter((todo) => todo.id !== id);
+      return updatedTodos;
+    });
   }
 
   return (
@@ -26,7 +36,13 @@ const TodoList = () => {
       </div>
 
       {todos.map((todo) => (
-        <Todo key={nanoid()} title={todo.title} checked={todo.checked} />
+        <Todo
+          key={todo.id}
+          title={todo.title}
+          checked={todo.checked}
+          onDelete={() => handleDelete(todo.id)}
+          id={todo.id}
+        />
       ))}
     </div>
   );
